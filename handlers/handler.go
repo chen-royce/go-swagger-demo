@@ -10,37 +10,16 @@ import (
 )
 
 // A 500 error returned in the response
-// swagger:response errorResponse500
 type errorResponse500 struct {
-	// The error message
-	// example: bad input
-	Error string `json:"error"`
-
-	// The status code
-	// example: 500
-	Status int `json:"status"`
+	Error  string `json:"error"`
+	Status int    `json:"status"`
 }
 
 // EchoHandlerResponse is the response from the echo handler endpoint
-// swagger:model echoHandlerResponse
 type EchoHandlerResponse struct {
-	// The response string
-	//
-	// required: true
-	// example: ECHO ECHO ECHO
 	ResponseString string
 }
 
-// swagger:parameters echoText
-type responseStringCase struct {
-	// Description: Capitalization for response string
-	// in: url
-	// required: false
-	// example: "upper"
-	Case echoCaseType
-}
-
-// swagger:enum echoCaseType
 type echoCaseType string
 
 const (
@@ -50,37 +29,6 @@ const (
 )
 
 // EchoHandler echoes and formats text content based on provided query parameters
-// swagger:route GET /echo echoText
-//
-// consumes:
-//
-// produces:
-// - application/json
-//
-// schemes: http
-//
-// deprecated: false
-//
-// security:
-// - api_key:
-//
-// parameters:
-//
-//   - + name: data
-//     in: query
-//     description: the string to echo
-//     required: true
-//     type: string
-//
-//   - + name: repetitions
-//     in: query
-//     description: the number of times to echo the string
-//     required: false
-//     type: integer
-//
-// responses:
-// - 200: echoHandlerResponse
-// - 500: errorResponse500
 func EchoHandler(w http.ResponseWriter, r *http.Request) {
 	// get input from query param
 	data := r.URL.Query().Get("data")
