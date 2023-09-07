@@ -1,0 +1,89 @@
+basePath: /api
+consumes:
+    - application/json
+definitions:
+    echoHandlerResponse:
+        description: EchoHandlerResponse is the response from the echo handler endpoint
+        properties:
+            ResponseString:
+                description: The response string
+                example: ECHO ECHO ECHO
+                type: string
+        required:
+            - ResponseString
+        type: object
+        x-go-name: EchoHandlerResponse
+        x-go-package: go-swagger-demo/handlers
+info:
+    contact:
+        email: rchen@rvohealth.com
+        name: Royce Chen
+    description: |-
+        The Echo API echoes and formats content via query parameters
+        passed into GET requests
+    termsOfService: there are no TOS at this moment, use at your own risk
+    title: Echo API documentation
+    version: 0.0.1
+paths:
+    /echo:
+        get:
+            operationId: echoText
+            parameters:
+                - description: |-
+                    Description: Capitalization for response string
+                    in: url
+                    upper upperCase
+                    lower lowerCase
+                    spongebob spongeBob
+                  enum:
+                    - upper
+                    - lower
+                    - spongebob
+                  example: '"upper"'
+                  in: query
+                  name: Case
+                  type: string
+                  x-go-enum-desc: |-
+                    upper upperCase
+                    lower lowerCase
+                    spongebob spongeBob
+                - description: the string to echo
+                  in: query
+                  name: data
+                  required: true
+                  type: string
+                - description: the number of times to echo the string
+                  in: query
+                  name: repetitions
+                  type: integer
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: echoHandlerResponse
+                    schema:
+                        $ref: '#/definitions/echoHandlerResponse'
+                "500":
+                    $ref: '#/responses/errorResponse500'
+            schemes:
+                - http
+            security:
+                - api_key: []
+produces:
+    - application/json
+responses:
+    errorResponse500:
+        description: A 500 error returned in the response
+        headers:
+            error:
+                description: The error message
+                example: bad input
+                type: string
+            status:
+                description: The status code
+                example: 500
+                format: int64
+                type: integer
+schemes:
+    - http
+swagger: "2.0"
